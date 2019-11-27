@@ -16,11 +16,14 @@ def create_parking_lot(request):
     slot_size = int(request.GET.get('parking_lot_size', 0))
     if slot_size:
         msg = 'Created a parking lot with %s slot(s).' % slot_size
-    SlotDetails.objects.all().delete()
-    for i in range(1,slot_size+1):
-        new_obj = SlotDetails(slot=i)
-        new_obj.save()
-    return Response({'msg': msg}, template_name='create-parking-lot-template.html')
+        SlotDetails.objects.all().delete()
+        for i in range(1,slot_size+1):
+            new_obj = SlotDetails(slot=i)
+            new_obj.save()
+        return Response({'msg': msg, 'parking_lot_size': slot_size}, template_name='create-parking-lot-template.html')
+    else:
+        msg = 'Slot size should be greater than 0.'
+        return Response({'msg': msg}, template_name='create-parking-lot-template.html')
 
 @api_view(['GET', 'POST'])
 @permission_classes([AllowAny])
@@ -36,12 +39,12 @@ def park_the_vehicle(request):
             new_obj = ParkingDetails(registration_no=reg_num, color=color, allocated_slot=SlotDetails.objects.get(slot=nearest_empty_slot))
             new_obj.save()
             SlotDetails.objects.filter(slot=nearest_empty_slot).update(is_booked=True)
-            return render(request, 'booking-parking-lot-template.html', {'allocated_slot_num': nearest_empty_slot})
+            return render(request, 'booking-parking-lot-template.html', {'allocated_slot_num': nearest_empty_slot, 'reg_num': reg_num, 'color': color})
         else:
             status = 'Car with registration num: %s and color: %s is already present.' % (reg_num, color)
-            return render(request, 'booking-parking-lot-template.html', {'status1': status})
+            return render(request, 'booking-parking-lot-template.html', {'status1': status, 'reg_num': reg_num, 'color': color})
     else:
-        return render(request, 'booking-parking-lot-template.html', {'status2': 'All fields are mandatory under booking !'})
+        return render(request, 'booking-parking-lot-template.html', {'status2': 'All fields are mandatory under booking !', 'reg_num': reg_num, 'color': color})
 
 @api_view(['GET', 'POST'])
 @permission_classes([AllowAny])
