@@ -1,0 +1,15 @@
+<h2>Create a Parking Lot</h2>
+
+<form action="/myapi/create-parking-lot">
+  <label for="parking_lot_size">Enter Size of Parking Lot: </label>&nbsp;&nbsp;
+  <input id="parking_lot_size" type="number" name="parking_lot_size" value="{{ parking_lot_size }}">&nbsp;&nbsp;
+  <input type="submit" value="Submit">
+</form>
+{% if msg  %}
+    {{ msg }}
+    <br><br><br>
+{% endif %}
+
+<form action="/myapi/book-or-leave-parking-slot">
+  <input type="submit" value="Book Slot For Your Vehicle">
+</form>

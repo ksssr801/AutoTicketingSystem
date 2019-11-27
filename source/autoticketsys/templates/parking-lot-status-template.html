@@ -1,0 +1,64 @@
+<html>
+<head>
+<style>
+table {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>
+</head>
+<body>
+
+<center><h2><u>Parking Lot Status</u></h2></center>
+
+<form action="/myapi/parking-lot-current-status">
+    <label for="color">Filter By Color: </label>&nbsp;&nbsp;
+    <input id="color" type="text" name="color" value="{{ color }}">&nbsp;&nbsp;
+    <input type="submit" value="Filter">
+</form>
+
+<form action="/myapi/parking-lot-current-status">
+    <label for="reg_num">Filter By Registration Number: </label>&nbsp;&nbsp;
+    <input id="reg_num" type="text" name="reg_num" value="{{ reg_num }}">&nbsp;&nbsp;
+    <input type="submit" value="Filter">
+</form>
+<br>
+<label>All Empty Slot(s): </label>{{ empty_slots }}
+<br>
+<br>
+<table>
+  <tr>
+    <th>Ticket ID</th>
+    <th>Registration Number</th>
+    <th>Color</th>
+    <th>Slot Allocated</th>
+</tr>
+{% for key, value_list in final_dict.items %}
+    {% for val in value_list %}
+    <tr>
+        <td>{{val.ticket_id}}</td>
+        <td>{{val.registration_no}}</td>
+        <td>{{val.color}}</td>
+        <td>{{val.allocated_slot_id}}</td>
+    </tr>
+    {% endfor %}
+{% endfor %}
+</table>
+<br>
+<center><form action="/myapi/book-or-leave-parking-slot">
+    <input type="submit" value="Book A Slot">
+</form></center>
+
+</body>
+</html>

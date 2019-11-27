@@ -1,0 +1,37 @@
+<h4>Book the Parking Lot</h4>
+
+{% if status2 %}
+    {{ status2 }}
+    <br><br>
+{% endif %}
+<form action="/myapi/book-or-leave-parking-slot">
+    <label for="reg_num">Enter Registration Number: </label>&nbsp;&nbsp;
+    <input id="reg_num" type="text" name="reg_num" value="{{ reg_num }}"><br><br>
+    <label for="color">Enter Color of Vehicle: </label>&nbsp;&nbsp;
+    <input id="color" type="text" name="color" value="{{ color }}"><br><br>
+    <input type="submit" value="Submit">
+</form>
+{% if allocated_slot_num %}
+    <label>Allocated Slot Number: </label>{{ allocated_slot_num }}
+    <br><br>
+{% endif %}
+{% if status1 %}
+    {{ status1 }}
+    <br><br>
+{% endif %}
+
+<h4>Leave the Parking Lot</h4>
+
+<form action="/myapi/leave-parking-slot">
+    <label for="slot_num">Enter Slot Number: </label>&nbsp;&nbsp;
+    <input id="slot_num" type="number" name="slot_num" value="{{ slot_num }}"><br><br>
+    <input type="submit" value="Submit">
+</form>
+{% if msg %}
+    {{ msg }}
+    <br><br>
+{% endif %}
+
+<form action="/myapi/parking-lot-current-status">
+    <input type="submit" value="Current Parking Lot Status">
+</form>
