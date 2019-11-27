@@ -6,7 +6,7 @@ SOURCEDIR="$(dirname "$INSTDIR")"
 echo $SOURCEDIR
 
 cd $SOURCEDIR
-source someenv/bin/activate
+source AutoTktSysEnv/bin/activate
 cd $INSTDIR
 start()
 {

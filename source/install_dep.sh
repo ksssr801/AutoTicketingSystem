@@ -6,10 +6,10 @@ SOURCEDIR="$(dirname "$INSTDIR")"
 echo $SOURCEDIR
 
 cd $SOURCEDIR
-python3 -m venv SomeEnv
-source SomeEnv/bin/activate
+python3 -m venv AutoTktSysEnv
+source AutoTktSysEnv/bin/activate
 cd $INSTDIR
-echo "Virtual environment (SomeEnv) has been created."
+echo "Virtual environment (AutoTktSysEnv) has been created."
 echo ""
 echo "Installing the Python dependencies"
 pip3 install --upgrade pip
