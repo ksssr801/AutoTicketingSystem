@@ -35,11 +35,14 @@ def park_the_vehicle(request):
         count = ParkingDetails.objects.filter(registration_no=reg_num, color=color).count()
         if not count:
             all_empty_slots = [slot_obj.get('slot', None) for slot_obj in SlotDetails.objects.values().filter(is_booked=False)]
-            nearest_empty_slot = min(all_empty_slots)
-            new_obj = ParkingDetails(registration_no=reg_num, color=color, allocated_slot=SlotDetails.objects.get(slot=nearest_empty_slot))
-            new_obj.save()
-            SlotDetails.objects.filter(slot=nearest_empty_slot).update(is_booked=True)
-            return render(request, 'booking-parking-lot-template.html', {'allocated_slot_num': nearest_empty_slot, 'reg_num': reg_num, 'color': color})
+            if len(all_empty_slots):
+                nearest_empty_slot = min(all_empty_slots)
+                new_obj = ParkingDetails(registration_no=reg_num, color=color, allocated_slot=SlotDetails.objects.get(slot=nearest_empty_slot))
+                new_obj.save()
+                SlotDetails.objects.filter(slot=nearest_empty_slot).update(is_booked=True)
+                return render(request, 'booking-parking-lot-template.html', {'allocated_slot_num': nearest_empty_slot, 'reg_num': reg_num, 'color': color})
+            else:
+                return render(request, 'booking-parking-lot-template.html', {'full_status': 'Sorry, Parking Slot is full.', 'reg_num': reg_num, 'color': color})
         else:
             status = 'Car with registration num: %s and color: %s is already present.' % (reg_num, color)
             return render(request, 'booking-parking-lot-template.html', {'status1': status, 'reg_num': reg_num, 'color': color})
@@ -74,8 +77,11 @@ def leave_the_parking_lot(request):
 def get_parking_lot_status(request):
     color = str(request.GET.get('color',''))
     reg_num = str(request.GET.get('reg_num',''))
+    parking_slot_size = SlotDetails.objects.values_list(flat=True).count()
     empty_slots = SlotDetails.objects.values_list(flat=True).filter(is_booked=False)
     empty_slots = str(list(empty_slots))[1:-1]
+    if not empty_slots:
+        empty_slots = 'All Full.'
     if color:
         parking_dataset = ParkingDetails.objects.filter(color__contains=color).values()
     elif reg_num:
@@ -86,4 +92,4 @@ def get_parking_lot_status(request):
     for obj in parking_dataset:
         obj.update({'ticket_id':'SlotTkt'+str(obj.get('ticket_id'))})
     final_dict = {'parking_lot_status': parking_dataset}
-    return render(request, 'parking-lot-status-template.html', {'final_dict': final_dict, 'color': color, 'reg_num': reg_num, 'empty_slots': empty_slots})
+    return render(request, 'parking-lot-status-template.html', {'final_dict': final_dict, 'color': color, 'reg_num': reg_num, 'empty_slots': empty_slots, 'parking_slot_size': parking_slot_size})
