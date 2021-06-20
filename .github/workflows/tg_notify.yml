@@ -1,6 +1,6 @@
 name: tg-notify
 
-on: [push, pull_request]
+on: [push]
   
 jobs:
   build:
@@ -11,6 +11,7 @@ jobs:
       with:
         to: ${{ secrets.TELEGRAM_TO }}
         token: ${{ secrets.TELEGRAM_TOKEN }}
-        message: |  #https://help.github.com/en/actions/reference/contexts-and-expression-syntax-for-github-actions#github-context
+        message:
           ${{ github.event_name }}: commit in ${{ github.repository }} by "${{ github.actor }}"
-          Commit Hash: [${{github.sha}}](https://github.com/ksssr801/AutoTicketingSystem/commit/${{github.sha}})
+          Commit Hash: https://github.com/ksssr801/AutoTicketingSystem/commit/${{github.sha}}
+          ${{ github }}
