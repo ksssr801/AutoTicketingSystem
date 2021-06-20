@@ -1,5 +1,4 @@
 from .models import ParkingDetails, SlotDetails
-from .serializers import ParkingDetailsSerializer, SlotDetailsSerializer
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes, renderer_classes
 from rest_framework.renderers import TemplateHTMLRenderer
