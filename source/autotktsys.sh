@@ -5,7 +5,7 @@ echo $INSTDIR
 SOURCEDIR="$(dirname "$INSTDIR")"
 echo $SOURCEDIR
 
-cd $SOURCEDIR
+cd /opt
 source AutoTktSysEnv/bin/activate
 cd $INSTDIR
 start()

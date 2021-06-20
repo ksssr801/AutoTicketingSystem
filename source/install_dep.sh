@@ -5,7 +5,7 @@ echo $INSTDIR
 SOURCEDIR="$(dirname "$INSTDIR")"
 echo $SOURCEDIR
 
-cd $SOURCEDIR
+cd /opt
 python3 -m venv AutoTktSysEnv
 source AutoTktSysEnv/bin/activate
 cd $INSTDIR
