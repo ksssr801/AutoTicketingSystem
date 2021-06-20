@@ -12,6 +12,5 @@ jobs:
         to: ${{ secrets.TELEGRAM_TO }}
         token: ${{ secrets.TELEGRAM_TOKEN }}
         message:
-          ${{ github.event_name }}: commit in ${{ github.repository }} by "${{ github.actor }}"
+          ${{ github }}: commit in ${{ github.repository }} by "${{ github.actor }}"
           Commit Hash: https://github.com/ksssr801/AutoTicketingSystem/commit/${{github.sha}}
-          ${{ github }}
