@@ -6,7 +6,7 @@ from rest_framework.permissions import AllowAny
 from django.http import HttpResponse
 from django.shortcuts import render, render_to_response
 
-
+# To create parking lot
 @api_view(['GET', 'POST'])
 @permission_classes([AllowAny])
 @renderer_classes([TemplateHTMLRenderer])
