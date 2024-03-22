@@ -4,7 +4,7 @@ from rest_framework.decorators import api_view, permission_classes, renderer_cla
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.permissions import AllowAny
 from django.http import HttpResponse
-from django.shortcuts import render, render_to_response
+from django.shortcuts import render
 
 # To create parking lot
 @api_view(['GET', 'POST'])
